@@ -12,6 +12,7 @@ import 'package:test_printer/log_tool.dart';
 import 'package:test_printer/receipt01.dart';
 import 'package:test_printer/receipt03.dart';
 import 'package:test_printer/receipt04.dart';
+import 'package:test_printer/receipt05.dart';
 import 'package:test_printer/receipt07.dart';
 
 void main() {
@@ -128,7 +129,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 onPressed: () {
                   _screenshotController.capture(delay: Duration(milliseconds: 10)).then((capturedImage) async {
                     _theImageComefromScreenShot = capturedImage!;
-                    testPrint(_printerIP.text, _theImageComefromScreenShot);
+                    // testPrint(_printerIP.text, _theImageComefromScreenShot);
                     setState(() {});
                   }).catchError((onError) {
                     print(onError);
@@ -141,7 +142,8 @@ class _MyHomePageState extends State<MyHomePage> {
               // Receipt01(screenshotController: _screenshotController),
               // Receipt02(screenshotController: _screenshotController),
               // Receipt03(screenshotController: _screenshotController),
-              Receipt04(screenshotController: _screenshotController),
+              // Receipt04(screenshotController: _screenshotController),
+              Receipt05(screenshotController: _screenshotController),
               // Receipt07(screenshotController: _screenshotController),
               SizedBox(
                 height: 25,
