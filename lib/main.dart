@@ -13,6 +13,7 @@ import 'package:test_printer/receipt01.dart';
 import 'package:test_printer/receipt03.dart';
 import 'package:test_printer/receipt04.dart';
 import 'package:test_printer/receipt05.dart';
+import 'package:test_printer/receipt06.dart';
 import 'package:test_printer/receipt07.dart';
 
 void main() {
@@ -143,7 +144,8 @@ class _MyHomePageState extends State<MyHomePage> {
               // Receipt02(screenshotController: _screenshotController),
               // Receipt03(screenshotController: _screenshotController),
               // Receipt04(screenshotController: _screenshotController),
-              Receipt05(screenshotController: _screenshotController),
+              // Receipt05(screenshotController: _screenshotController),
+              Receipt06(screenshotController: _screenshotController),
               // Receipt07(screenshotController: _screenshotController),
               SizedBox(
                 height: 25,
