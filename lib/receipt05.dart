@@ -19,16 +19,16 @@ class Receipt05 extends StatelessWidget {
     return Screenshot(
       controller: _screenshotController,
       child: Container(
-          width: 160,
+          width: 200,
           child: Column(
             children: [
               Text(
                 "承穎科技有限公司",
-                style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 12),
               ),
               Text(
                 "結帳單",
-                style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 12),
               ),
               SizedBox(height: 10),
               Row(
@@ -57,7 +57,7 @@ class Receipt05 extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      "客戶名稱: UvuvwevwevweOnyetenyevweUgwemuhwemOsas",
+                      "客戶名稱: UvuvwevwevweOnyetenyevweUgwemu\nhwemOsas",
                       style: TextStyle(fontSize: _fontSize8),
                       textAlign: TextAlign.left,
                     ),
@@ -201,7 +201,7 @@ class Receipt05 extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      "炸雞腿飯600000000000000000000000000000",
+                      "炸雞腿飯炸雞腿飯炸雞腿飯炸雞腿飯炸雞腿飯炸雞腿飯6000",
                       style: TextStyle(fontSize: _fontSize10),
                       textAlign: TextAlign.left,
                     ),
@@ -248,7 +248,7 @@ class Receipt05 extends StatelessWidget {
                 _line,
                 maxLines: 1,
                 overflow: TextOverflow.visible,
-                style: TextStyle(fontSize: _fontSize8),
+                style: TextStyle(fontSize: _fontSize10),
               ),
               Row(
                 children: [
@@ -287,7 +287,7 @@ class Receipt05 extends StatelessWidget {
                 _line,
                 maxLines: 1,
                 overflow: TextOverflow.visible,
-                style: TextStyle(fontSize: _fontSize8),
+                style: TextStyle(fontSize: _fontSize10),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -366,8 +366,9 @@ class Receipt05 extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      "pos銷貨 測試 烏龜煢煢孑立 沆瀣一氣踽踽獨行 醍醐灌頂綿綿瓜瓞 奉為圭臬龍行龘龘 犄角旮旯娉婷嫋娜 涕泗滂沱呶呶不休 不稂不莠卬咄嗟 蹀躞 耄耋 饕餮囹圄 蘡薁 覬覦 齟齬狖軛鼯軒 怙惡不悛其靁虺虺 醃臢孑孓陟罰臧否 針砭時弊 鱗次櫛比 一張一翕",
-                      style: TextStyle(fontSize: _fontSize12),
+                      "pos銷貨 測試 烏龜咄嗟 蹀躞 耄耋 饕餮囹圄 蘡薁 覬覦 齟齬狖軛鼯軒 怙惡不悛其靁虺虺 醃臢孑孓陟罰臧否 針砭時弊 鱗次櫛比 一張一翕",
+                      // "pos銷貨 測試 烏龜煢煢孑立 沆瀣一氣踽踽獨行 醍醐灌頂綿綿瓜瓞 奉為圭臬龍行龘龘 犄角旮旯娉婷嫋娜 涕泗滂沱呶呶不休 不稂不莠卬咄嗟 蹀躞 耄耋 饕餮囹圄 蘡薁 覬覦 齟齬狖軛鼯軒 怙惡不悛其靁虺虺 醃臢孑孓陟罰臧否 針砭時弊 鱗次櫛比 一張一翕",
+                      style: TextStyle(fontSize: _fontSize10),
                       textAlign: TextAlign.left,
                     ),
                   ),

@@ -31,15 +31,12 @@ dependencies:
   flutter:
     sdk: flutter
   logger: 1.2.0 #log套件
-  screenshot: ^2.5.0 #截圖
+  screenshot: 3.0.0 #截圖
   esc_pos_printer: 4.1.0 #單據列印
   esc_pos_utils: 1.1.0
   charset_converter: 2.2.1
-#  flutter_esc_pos_utils: ^1.0.1
-#  esc_pos_printer_lts: 4.1.2
-#  esc_pos_utils_lts: 0.0.1
-  image: ^3.0.8
-#  flutter_esc_pos_network: ^1.0.3
+  image: 3.0.8
+#  multicast_dns: 0.3.2+7
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

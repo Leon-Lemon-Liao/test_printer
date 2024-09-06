@@ -19,14 +19,14 @@ class Receipt03 extends StatelessWidget {
     return Screenshot(
       controller: _screenshotController,
       child: Container(
-          width: 160,
+          width: 200,
           child: Column(
             children: [
               Row(
                 children: [
                   Text(
                     "承穎科技有限公司",
-                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 12),
                   ),
                 ],
                 mainAxisAlignment: MainAxisAlignment.center,
