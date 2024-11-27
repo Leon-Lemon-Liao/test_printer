@@ -7,6 +7,7 @@ import 'package:esc_pos_printer/esc_pos_printer.dart';
 import 'package:esc_pos_utils/esc_pos_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image/image.dart' as img;
 import 'package:multicast_dns/multicast_dns.dart';
 import 'package:network_tools/network_tools.dart';
@@ -55,6 +56,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  FToast fToast = FToast();
   late Uint8List _theImageComefromScreenShot;
   ScreenshotController _screenshotController = ScreenshotController();
   TextEditingController _printerIP = TextEditingController(text: '192.168.0.31');
@@ -62,6 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    fToast.init(context);
     return Scaffold(
       appBar: AppBar(
         title: Text("Printer Test"),
@@ -85,15 +88,18 @@ class _MyHomePageState extends State<MyHomePage> {
                 onPressed: () async {
                   // await _testMDNS(context);
                   // await _testMDNSbyUDP();
-                  await _testMulticastDNS();
+                  // await _testMulticastDNS();
 
-                  // _screenshotController.capture(delay: Duration(milliseconds: 10)).then((capturedImage) async {
-                  //   _theImageComefromScreenShot = capturedImage!;
-                  //   testPrint(_printerIP.text, _theImageComefromScreenShot);
-                  //   setState(() {});
-                  // }).catchError((onError) {
-                  //   print(onError);
-                  // });
+                  _screenshotController.capture().then((capturedImage) async {
+                    _theImageComefromScreenShot = capturedImage!;
+                    setState(() {
+                      // testPrint(_printerIP.text, _theImageComefromScreenShot);
+                      testPrint('192.168.0.31', _theImageComefromScreenShot);
+                      testPrint('192.168.0.108', _theImageComefromScreenShot);
+                    });
+                  }).catchError((onError) {
+                    print(onError);
+                  });
                 },
               ),
               SizedBox(height: 10),
@@ -176,20 +182,24 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void testPrint(String printerIp, Uint8List bytes) async {
+    //紙張寬度
     PaperSize paper = PaperSize.mm80;
     final profile = await CapabilityProfile.load();
     final printer = NetworkPrinter(paper, profile);
     final PosPrintResult res = await printer.connect(printerIp, port: 9100);
-    print(paper.width.toString());
 
     if (res == PosPrintResult.success) {
-      final img.Image? image = img.decodeImage(bytes);
-      printer.image(
-          img.copyResize(
-            image!,
-            width: paper.width,
-          ),
-          align: PosAlign.center);
+      showToast('success');
+      logger.i('printer.connect success');
+      // final img.Image? image = img.decodeImage(bytes);
+      // printer.image(
+      //     img.copyResize(
+      //       image!,
+      //       width: paper.width,
+      //     ),
+      //     align: PosAlign.center);
+
+      // printer.text('text');
       printer.feed(2);
       // printer.cut();
       printer.reset();
@@ -199,7 +209,32 @@ class _MyHomePageState extends State<MyHomePage> {
       //   printer.reset();
       //   printer.disconnect();
       // });
+    } else if (res == PosPrintResult.timeout) {
+      showToast('timeout');
+      logger.i('printer.connect timeout');
+    } else if (res == PosPrintResult.printerNotSelected) {
+      showToast('printerNotSelected');
+      logger.i('printer.connect printerNotSelected');
+    } else if (res == PosPrintResult.ticketEmpty) {
+      showToast('ticketEmpty');
+      logger.i('printer.connect ticketEmpty');
+    } else if (res == PosPrintResult.printInProgress) {
+      showToast('printInProgress');
+      logger.i('printer.connect printInProgress');
+    } else if (res == PosPrintResult.scanInProgress) {
+      showToast('scanInProgress');
+      logger.i('printer.connect scanInProgress');
+    } else {
+      logger.i('printer.connect else');
     }
+  }
+
+  void showToast(String message) {
+    return fToast.showToast(
+      child: Text('printer.connect $message'),
+      gravity: ToastGravity.TOP,
+      toastDuration: Duration(seconds: 2),
+    );
   }
 
   @override
@@ -244,14 +279,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
     final client = MDnsClient(
       // Create a custom RawDatagramSocketFactory to avoid the reusePort issue on Android
-      rawDatagramSocketFactory: (dynamic host, int port,
-          {bool reuseAddress = true,
-            bool reusePort = false,
-            int ttl = 255}) {
-        return RawDatagramSocket.bind(host, port,
-            reuseAddress: reuseAddress,
-            reusePort: false,
-            ttl: ttl);
+      rawDatagramSocketFactory: (dynamic host, int port, {bool reuseAddress = true, bool reusePort = false, int ttl = 255}) {
+        return RawDatagramSocket.bind(host, port, reuseAddress: reuseAddress, reusePort: false, ttl: ttl);
       },
     );
 
@@ -269,11 +298,11 @@ class _MyHomePageState extends State<MyHomePage> {
       // logger.i('for1 ptr.domainName: ' + ptr.domainName);
       await for (final SrvResourceRecord srv in client.lookup<SrvResourceRecord>(ResourceRecordQuery.service(ptr.domainName))) {
         // logger.i('for2 srv.target: '+ srv.target);
-          await for (final IPAddressResourceRecord ip in client.lookup<IPAddressResourceRecord>(ResourceRecordQuery.addressIPv4(srv.target))) {
-            // logger.i('for3');
-            print('Service found at ${ip.address.address}:${srv.port}');
-            print(srv.target);
-          }
+        await for (final IPAddressResourceRecord ip in client.lookup<IPAddressResourceRecord>(ResourceRecordQuery.addressIPv4(srv.target))) {
+          // logger.i('for3');
+          print('Service found at ${ip.address.address}:${srv.port}');
+          print(srv.target);
+        }
 
         // // Domain name will be something like "io.flutter.example@some-iphone.local._dartobservatory._tcp.local"
         // final String bundleId =
